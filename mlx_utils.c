@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:13:41 by modat             #+#    #+#             */
-/*   Updated: 2025/04/19 11:27:03 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/20 20:20:11 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void    init_mlxset(t_mlx  *mlxset)
         perror("mlx_get_data_addr failed or returned invalid metadata\n");
         exit(EXIT_FAILURE);
     }
+    init_colors(mlxset);
     // event_init(fractol)
     zoom_init(mlxset); // zoom ..etc. 
 }
@@ -76,7 +77,20 @@ char *get_type_name(t_type type)
 void    zoom_init(t_mlx *fractol)
 {
      // Set initial zoom and offsets
-    fractol->zoom = 1.0;
-    fractol->offset_x = 0.0;
-    fractol->offset_y = 0.0;
+    if (fractol->type == BURNING_SHIP)
+    {
+        // fractol->zoom = 1.5;
+        // fractol->offset_x = -1.8;
+        // fractol->offset_y = -0.05;
+        fractol->zoom = 20.0;
+        fractol->offset_x = -1.758;
+        fractol->offset_y = -0.035;
+
+    }
+    else 
+    {
+        fractol->zoom = 1.0;
+        fractol->offset_x = 0.0;
+        fractol->offset_y = 0.0;
+    }
 }

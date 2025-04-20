@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "minilibx-linux/mlx.h"
 #include <stdio.h>
+#include <math.h>
 
 #define WIDTH 800
 #define HEIGHT 600 
@@ -16,6 +17,23 @@
 #define MOVE_SPEED 0.1
 #define MAX_ITER  100
 
+#define KEY_ESC 65307
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
+#define KEY_UP 65362
+#define KEY_DOWN 65364
+#define PALETTE_SIZE 16
+
+typedef struct s_fractal
+{
+    double      zx;
+    double      zy;
+    double      cx;
+    double      cy;
+    int     max_iter; 
+    double  j_real;
+    double  j_imaginery;
+} t_fractal;
 
 typedef struct s_complex
 {
@@ -73,22 +91,14 @@ typedef struct s_mlx
     double  offset_x;   // X pan offset in complex plane
     double  offset_y;   // Y pan offset in complex plane
 // Fractal parameters:
+    double  win_x;
+    double  win_y;
+    int palette[PALETTE_SIZE];
     t_complex   complex;
     t_fractal   fractal;
-  //  int     max_iter;
-    //int     width, height; defined 
 } t_mlx;
 
-typedef struct s_fractal
-{
-    double  real_min;
-    double  real_max;
-    double  imaginery_min;
-    double  imaginery_max;
-    int     max_iter; 
-    double  j_real;
-    double  j_imaginery;
-} t_fractal;
+
 /*
 For zooming: I do the mapping screen to complex plane
 */
@@ -115,7 +125,21 @@ int     mouse_hook(int button, int x, int y, t_mlx *fractol);
 int     arrow_keys(int keycode, t_mlx *fractol);
 
 // rendering
+void    mandelbrot(t_mlx *fractol);
+int   fractal_rendering(t_mlx *fractol);
+// int rgb(int r, int g, int b);
 
+int rgb(int r, int g, int b);
+int get_color(int iteration, double zx, double zy, t_mlx *fractol);
+// int hsv_to_rgb(double h, double s, double v);
+void mandelbrot_math(int x, int y, t_mlx *fractol);
+void    init_colors(t_mlx *fractol);
+void julia(t_mlx *fractol);
+void julia_math(int x, int y, t_mlx *fractol);
+void burning_ship(t_mlx *fractol);
+void burning_ship_math(int x, int y, t_mlx *fractol);
+
+void print_type(t_mlx *fractol);
 
 #endif 
 

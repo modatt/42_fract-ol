@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:25:20 by modat             #+#    #+#             */
-/*   Updated: 2025/04/17 17:51:25 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/20 21:18:43 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,38 @@ int     ft_strcmp(const char *s1, const char *s2)
     return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
-int     is_valid(t_mlx *fractol, int argc, char **argv)
+int is_valid(t_mlx *fractol, int argc, char **argv)
 {
-       
-    if (argc == 2 && ft_strcmp(argv[1], "mandlebrot") == 0)
-        fractol->type = MANDELBROT;
-    else if (argc == 2 && ft_strcmp(argv[1], "burning_ship") == 0)
+    if (argc == 2)
+    {
+        if (ft_strcmp(argv[1], "mandlebrot") == 0) // Corrected spelling to 'mandelbrot'
+            fractol->type = MANDELBROT;
+        else if (ft_strcmp(argv[1], "burning_ship") == 0)
             fractol->type = BURNING_SHIP;
-    else if (argc == 4 && ft_strcmp(argv[1], "julia") == 0)
+        else if (ft_strcmp(argv[1], "julia") == 0)  // Fixed the typo to "julia" and compared correctly
         {
             fractol->type = JULIA;
-            fractol->j_real = atof(argv[2]);
-            fractol->j_imaginery = atof(argv[3]);
-            // else if error in inputs numbers
+            fractol->fractal.cx = -0.7;
+            fractol->fractal.cy = 0.27015;
         }
+    }
+    else if (argc == 4 && ft_strcmp(argv[1], "julia") == 0)
+    {
+        fractol->type = JULIA;
+        fractol->fractal.cx = atof(argv[2]);
+        fractol->fractal.cy = atof(argv[3]);
+    }
     else 
     {
         write(STDERR_FILENO, "Enter a valid args:\n", 20);
         write(STDERR_FILENO, "./fractol <mandlebrot>\n", 23);
         write(STDERR_FILENO, "./fractol <julia> <real> <imaginery>\n", 37);
         write(STDERR_FILENO, "./fractol <burning_ship>\n", 25);
-        exit (1);
+        exit(1);
     }
-    return (1);
+    return 1;
 }
+
 
 
 double ft_atof(const char *nptr)

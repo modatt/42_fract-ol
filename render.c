@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/20 18:54:22 by modat             #+#    #+#             */
+/*   Updated: 2025/04/20 18:54:23 by modat            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 // scaling a rage of numbers with a known max & min values.
@@ -37,21 +49,3 @@
 
 
 // }
-
-void    fractol_render(t_mlx *fractol)
-{
-    int x;
-    int y;
-
-    y = 0;
-    while (y++ < HEIGHT)
-    {
-        x = 0;
-        while (x++ < WIDTH)
-        {
-            pixel_handler(x, y, fractol);
-        }
-        
-    }
-    
-}
