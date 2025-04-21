@@ -16,7 +16,7 @@
 # define ZOOM_FACTOR 1.1
 # define PAN_FACTOR 0.1
 # define MOVE_SPEED 0.1
-# define MAX_ITER 100
+# define MAX_ITER 200
 
 # define KEY_ESC 65307
 # define KEY_LEFT 65361

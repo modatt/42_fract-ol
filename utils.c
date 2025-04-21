@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:25:20 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 03:57:55 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 04:39:02 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	is_valid(t_mlx *fractol, int argc, char **argv)
 		else if (ft_strcmp(argv[1], "julia") == 0)
 		{
 			fractol->type = JULIA;
-			fractol->fractal.j_cx = -0.8;
-			fractol->fractal.j_cy = 0.156;
+			fractol->fractal.j_cx = -0.835;
+			fractol->fractal.j_cy = -0.2321;
 		}
 		else
 			error_mess();
