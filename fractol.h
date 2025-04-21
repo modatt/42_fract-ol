@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 16:52:10 by modat             #+#    #+#             */
+/*   Updated: 2025/04/21 20:19:27 by modat            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "minilibx-linux/mlx.h"
 # include <ctype.h>
 # include <math.h>
+# include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -27,10 +39,10 @@
 
 typedef struct s_fractal
 {
-    double      cx;
-    double      cy;
-    double      zx;
-    double      zy;
+	double		cx;
+	double		cy;
+	double		zx;
+	double		zy;
 	double		j_cx;
 	double		j_cy;
 }				t_fractal;
@@ -49,7 +61,7 @@ typedef struct s_palette_info
 	double		frac;
 }				t_palette_info;
 
-typedef enum
+typedef enum type
 {
 	MANDELBROT,
 	JULIA,

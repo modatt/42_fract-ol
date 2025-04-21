@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 02:30:12 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 04:19:38 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 20:20:53 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,5 @@ int	mem_alloc(t_mlx **fractol)
 		perror("Memory allocation failed");
 		return (1);
 	}
-	
-	// (*fractol)->fractal = malloc(sizeof(t_fractal));
-	// if (!(*fractol)->fractal)
-	// {
-	// 	perror("Memory allocation failed");
-	// 	return (1);
-	// }
 	return (0);
 }

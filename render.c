@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 04:21:01 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 04:29:09 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 20:20:44 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	fractal_rendering(t_mlx *fractol)
 		}
 	}
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img.img,
-			fractol->win_x, fractol->win_y);
+		fractol->win_x, fractol->win_y);
 	return (0);
 }
 
@@ -59,38 +59,34 @@ void	mandelbrot_math(int x, int y, t_mlx *fractol)
 		iteration++;
 	}
 	((int *)fractol->img.buffer)[y * WIDTH + x] = get_color(iteration,
-															fractol->fractal.zx,
-															fractol->fractal.zy,
-															fractol);
+			fractol->fractal.zx, fractol->fractal.zy, fractol);
 }
 
 void	julia_math(int x, int y, t_mlx *fractol)
 {
-	int		iteration;
+	int		iter;
 	double	cx;
 	double	cy;
 	double	temp;
 
-	// z starts at the screen-mapped coordinates
 	fractol->fractal.zx = (x - WIDTH / 2.0) * (4.0 / (fractol->zoom * WIDTH))
 		+ fractol->offset_x;
 	fractol->fractal.zy = (y - HEIGHT / 2.0) * (4.0 / (fractol->zoom * HEIGHT))
 		+ fractol->offset_y;
-	// fractol->julia_cx and julia_cy should be constants (set by user or default)
 	cx = fractol->fractal.j_cx;
 	cy = fractol->fractal.j_cy;
-	iteration = 0;
+	iter = 0;
 	while (fractol->fractal.zx * fractol->fractal.zx + fractol->fractal.zy
-		* fractol->fractal.zy < 4.0 && iteration < MAX_ITER)
+		* fractol->fractal.zy < 4.0 && iter < MAX_ITER)
 	{
 		temp = fractol->fractal.zx * fractol->fractal.zx - fractol->fractal.zy
 			* fractol->fractal.zy + cx;
 		fractol->fractal.zy = 2.0 * fractol->fractal.zx * fractol->fractal.zy
 			+ cy;
 		fractol->fractal.zx = temp;
-		iteration++;
+		iter++;
 	}
-	((int *)fractol->img.buffer)[y * WIDTH + x] = get_color(iteration,
+	((int *)fractol->img.buffer)[y * WIDTH + x] = get_color(iter,
 			fractol->fractal.zx, fractol->fractal.zy, fractol);
 }
 
@@ -105,12 +101,10 @@ void	burning_ship_math(int x, int y, t_mlx *fractol)
 	ite = 0;
 	fractol->fractal.zx = 0;
 	fractol->fractal.zy = 0;
-	// Map pixel (x, y) to complex plane (cx, cy)
 	fractol->fractal.cx = (x - WIDTH / 2.0) * (4.0 / (fractol->zoom * WIDTH))
 		+ fractol->offset_x;
 	fractol->fractal.cy = (y - HEIGHT / 2.0) * (4.0 / (fractol->zoom * HEIGHT))
 		+ fractol->offset_y;
-	// Fractal iteration loop with correct Burning Ship logic
 	while (fractol->fractal.zx * fractol->fractal.zx + fractol->fractal.zy
 		* fractol->fractal.zy < 4.0 && ite < MAX_ITER)
 	{

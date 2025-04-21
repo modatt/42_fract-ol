@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:13:41 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 02:32:25 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 20:19:50 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	exit_faild(t_mlx *mlxset)
 {
-	mlx_destroy_display(mlxset->mlx);
-	free(mlxset->mlx);
+	clean_exit(mlxset);
 	exit(EXIT_FAILURE);
 }
 
@@ -85,5 +84,6 @@ void	clean_exit(t_mlx *mlxset)
 	{
 		mlx_destroy_display(mlxset->mlx);
 		free(mlxset->mlx);
+		free(mlxset);
 	}
 }

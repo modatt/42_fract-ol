@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:24:58 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 02:37:30 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 20:19:08 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	close_win(t_mlx *fractol)
 	mlx_destroy_window(fractol->mlx, fractol->win);
 	mlx_destroy_display(fractol->mlx);
 	free(fractol->mlx);
+	free(fractol);
 	exit(0);
 	return (0);
 }
@@ -32,6 +33,7 @@ int	keypress_hook(int keycode, t_mlx *fractol)
 		mlx_destroy_window(fractol->mlx, fractol->win);
 		mlx_destroy_display(fractol->mlx);
 		free(fractol->mlx);
+		free(fractol);
 		exit(0);
 	}
 	return (0);
