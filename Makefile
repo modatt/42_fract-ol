@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = mandlebrot.c julia.c burning_ship.c main.c utils.c events.c mlx_utils.c render.c
+SRCS = main.c utils.c events.c mlx_utils.c render.c utils_1.c render_utils.c render_utils_1.c
 OBJS = $(SRCS:.c=.o)
 
 FRACTOL = fractol
