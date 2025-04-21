@@ -108,7 +108,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 int				is_valid(t_mlx *fractol, int argc, char **argv);
 void			julia_valid(t_mlx *fractol, char **argv);
 int				is_julia_valid(char *str);
-void			error_mess(void);
+void			error_mess(t_mlx *mlxset);
 double			ft_atof(const char *nptr);
 double			ft_atof1(const char *nptr, unsigned int i);
 

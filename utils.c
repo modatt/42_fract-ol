@@ -6,7 +6,7 @@
 /*   By: modat <modat@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:25:20 by modat             #+#    #+#             */
-/*   Updated: 2025/04/21 04:39:02 by modat            ###   ########.fr       */
+/*   Updated: 2025/04/21 04:59:54 by modat            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	is_valid(t_mlx *fractol, int argc, char **argv)
 			fractol->fractal.j_cy = -0.2321;
 		}
 		else
-			error_mess();
+			error_mess(fractol);
 	}
 	else if (argc == 4 && ft_strcmp(argv[1], "julia") == 0)
 	{
 		julia_valid(fractol, argv);
 	}
 	else
-		error_mess();
+		error_mess(fractol);
 	return (1);
 }
 
@@ -47,11 +47,12 @@ void	julia_valid(t_mlx *fractol, char **argv)
 		fractol->fractal.j_cy = ft_atof(argv[3]);
 		if (fractol->fractal.j_cx < -2.0 || fractol->fractal.j_cx > 2.0
 			|| fractol->fractal.j_cy < -2.0 || fractol->fractal.j_cy > 2.0)
-			error_mess();
+			error_mess(fractol);
 	}
 	else
 	{
 		write(STDERR_FILENO, "<julia> range <[(-2 ~ 2),(-2 ~ 2)]>\n", 36);
+		free(fractol);
 		exit(0);
 	}
 }
@@ -84,11 +85,12 @@ int	is_julia_valid(char *str)
 	return (1);
 }
 
-void	error_mess(void)
+void	error_mess(t_mlx *mlxset)
 {
 	write(STDERR_FILENO, "Enter a valid args:\n", 20);
 	write(STDERR_FILENO, "./fractol <mandlebrot>\n", 23);
 	write(STDERR_FILENO, "./fractol <burning_ship>\n", 25);
 	write(STDERR_FILENO, "./fractol <julia> <real> <imaginery>\n", 37);
+	free(mlxset);
 	exit(1);
 }
