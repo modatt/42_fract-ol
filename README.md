@@ -136,7 +136,7 @@ Valid y range is: 0 to 799
    └────────────────────────────────┘
 
 ### mapping 
-Absolutely! Let’s break down mapping from screen space to the complex plane — slowly, clearly, and visually. 🧠✨
+Absolutely! Let’s break down mapping from screen space to the complex plane — slowly, clearly, and visually. 
 
  Imagine Your Window:
 Let's say your screen (window) size is:
@@ -217,4 +217,4 @@ Mapping screen to complex plane is just:
 
 "Take a screen coordinate and stretch it to match the current view of the complex plane."
 
-Without this, you’d just be drawing on pixels, but Mandelbrot happens in the land of complex numbers 💫
+Without this, you’d just be drawing on pixels, but Mandelbrot happens in the land of complex numbers 
