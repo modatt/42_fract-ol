@@ -98,8 +98,7 @@ typedef struct s_mlx;
 4. Get Image Data Address
 You need to get a pointer to the raw pixel buffer of the image, so you can write pixel colors directly:
 
-c
-Copy
+
 Edit
 mlxset->img.addr = mlx_get_data_addr(mlxset->img.img,
                                      &mlxset->img.bpp,
@@ -115,7 +114,7 @@ line_size (bytes per line) → important for jumping to next row.
 
 endian → tells you pixel format.
 
-## ✅ x and y in put_pixel
+##  x and y in put_pixel
 x → the horizontal position of the pixel (0 is left, increasing to the right)
 
 y → the vertical position of the pixel (0 is top, increasing downward)
@@ -139,38 +138,32 @@ Valid y range is: 0 to 799
 ### mapping 
 Absolutely! Let’s break down mapping from screen space to the complex plane — slowly, clearly, and visually. 🧠✨
 
-🖥️ Imagine Your Window:
+ Imagine Your Window:
 Let's say your screen (window) size is:
 
-ini
-Copy code
 WIDTH = 800
 HEIGHT = 800
 This is your pixel space (aka screen space):
 
-scss
-Copy code
+
 (0,0)              → Top-left corner  
 (799,799)          → Bottom-right corner
 Now, let’s say you're rendering the Mandelbrot set, and the part of the complex plane you're viewing is:
 
-pgsql
-Copy code
 Real range:   [-2.0 to +2.0]     ⬅ left to right
 Imaginary range: [+2.0 to -2.0] ⬅ top to bottom (yes, Y is upside down)
-🧭 Goal
+ Goal
 For every pixel (x, y) on your screen, figure out which complex number c = re + im*i it represents.
 
-🧮 The Formula (Linear Interpolation)
+ The Formula (Linear Interpolation)
 This is how we "map" a number from one range to another:
 
-c
-Copy code
+
 double map(double val, double from_min, double from_max, double to_min, double to_max)
 {
     return to_min + (val - from_min) * (to_max - to_min) / (from_max - from_min);
 }
-🎯 Example: Map pixel x = 400 (middle of screen) → Real number
+ Example: Map pixel x = 400 (middle of screen) → Real number
 We’re mapping:
 
 val = 400
@@ -179,12 +172,11 @@ From range [0 to 800] (pixel width)
 
 To range [-2.0 to +2.0] (complex plane)
 
-c
-Copy code
+
 map(400, 0, 800, -2.0, +2.0) = 0.0
 That makes sense! 400 is halfway, and 0.0 is halfway between -2.0 and +2.0.
 
-📍 Visual Summary
+ Visual Summary
 mathematica
 Copy code
 Screen X (Pixels):     0          400           800
@@ -199,7 +191,7 @@ Screen Y (Pixels):     0          400           800
 Complex Im:         +2.0         0.0          -2.0
 So pixel (400, 400) = complex number 0.0 + 0.0i
 
-🔄 Use in Mandelbrot Code
+ Use in Mandelbrot Code
 In your fractal rendering loop:
 
 c
@@ -220,14 +212,9 @@ offset_x/y move the center
 
 map() figures out the correct re and im values
 
-🧠 TL;DR
+ TL;DR
 Mapping screen to complex plane is just:
 
 "Take a screen coordinate and stretch it to match the current view of the complex plane."
 
 Without this, you’d just be drawing on pixels, but Mandelbrot happens in the land of complex numbers 💫
-
-
-   ## Endnotes::: footnote at the end of the page:::
-
-   (1): 
