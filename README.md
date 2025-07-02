@@ -194,8 +194,7 @@ So pixel (400, 400) = complex number 0.0 + 0.0i
  Use in Mandelbrot Code
 In your fractal rendering loop:
 
-c
-Copy code
+
 for (int y = 0; y < HEIGHT; y++)
 {
     for (int x = 0; x < WIDTH; x++)
@@ -213,6 +212,7 @@ offset_x/y move the center
 map() figures out the correct re and im values
 
  TL;DR
+
 Mapping screen to complex plane is just:
 
 "Take a screen coordinate and stretch it to match the current view of the complex plane."
