@@ -1,220 +1,239 @@
 # fract-ol
 
-** Graphical project. **
+A high-performance fractal visualization application written in C that renders real-time interactive fractals using the MiniLibX graphics library. Explore infinite mathematical beauty with smooth zooming, panning, and customizable rendering parameters.
 
-**Fract-ol Project**
-- Goal: draw fractals (mandelbrot, julia set, burning_ship).
-- Learning objectives: Learn computer graphics optmization:
-    1. Minilibx practicing.
-    2. Complex numbers using.
-    3. Event handling. 
+## Overview
 
-## Do Fract-ol
+fract-ol is a graphical exploration tool for three of the most famous fractals in mathematics:
+- **Mandelbrot Set** - The quintessential fractal defined by the iteration of z → z² + c
+- **Julia Set** - A family of fractals parametrized by complex numbers
+- **Burning Ship** - A variant of Mandelbrot with absolute value transformations
 
-1. Set up **Makefile** to compile and test the projects through in each step.
-2. Prepare the **header** to be able to compile the project correctly.
--> setting the structure that needed for the project (since we need to use it here). (1)
-3. Writting from the **main.c** whereas our project starts from there.
+The application provides an intuitive interface for exploring these fractals with full interactive control over zoom levels, pan coordinates, and rendering parameters.
 
-## Project requirments 
-* To draw:
-- Place to draw on it "image + window"
-- Tools to draw "mlx- tools"
-- Display "mlx + win to display the paint"
+## Features
 
-## Pre knowledge: Computer Graphics
-**Graphics models:**
-1. Raster - bit map: (we will use it here)
-Raster images are represented by dots pixels.Since it is represented by pixel it is a resolution dependent. Files structures such as JPG, PNG, BMP, GIF. More detailed images.
+### Core Functionality
+- **Three Fractal Engines**: Complete implementations of Mandelbrot, Julia, and Burning Ship fractals
+- **Real-time Rendering**: Event-driven architecture for smooth, responsive interaction
+- **Adaptive Zooming**: Smooth zoom centered at mouse position with configurable zoom factor (1.1×)
+- **Pan Navigation**: Arrow key controls for exploring different regions of the complex plane
+- **Color Palette System**: 16-color palette mapping iteration depths to visual gradients
 
-{bit-map>> Raster images(more details higher quality), resolution dependent} 
-2. Vector is the opposite less details, smaller image and less space in memory. They are represented by sequence of commands or mathmatical statements.
-everytime I want to render a thing, first, I need to connect to the server. establish a connection with the server. 
-- mlx_init() has *xvar a pointer to a struct
- 
-### Project Implementation:
+### Graphics & Performance
+- **800×600 Resolution**: Fixed viewport optimized for detailed fractal exploration
+- **Iteration Depth**: Configurable maximum iterations (default 200) balancing quality and speed
+- **Direct Pixel Manipulation**: Optimized pixel buffer access for fast rendering
+- **Hardware-Accelerated Display**: Uses X11 server-side rendering via MiniLibX
 
-#1: connect to mlx.  mlx_init()
-#2: create a window. mlx_new_window()
-#3: images.
-#4: draw on image.
-#5: display image on window.
+## System Requirements
 
+### Dependencies
+- **GCC**: C compiler with C99 support
+- **X11 Development Libraries**: libx11-dev, libxext-dev
+- **BSD Library**: libbsd-dev (for compatibility functions)
+- **MiniLibX**: Included as submodule (builds automatically)
 
-## pre-sets:
-0.1. check args validation: is_valid().
+### Supported Platforms
+- Linux (native or WSL2)
+- Any system with X11 server support
 
-./fractol <fractal type> <para 1> <para 2>
---> 0.1.1. check argc either 2 or 4 
-fractol type <mandelbrot> or <burning_ship>:
-    ./fractol <fractal type>
-    ->> assign the type to mlx_set->type. 
-fractol <julia>:
-    ./fractol <fractal type> <para 1> <para 2>
-    ->> convert 
+## Installation
 
-__the type enum___
-typedef enum
-{
-    MANDELBROT,
-    JULIA,
-    BURNING_SHIP
-} t_type;
+### Prerequisites (Ubuntu/Debian/WSL)
+```bash
+sudo apt-get update
+sudo apt-get install -y gcc make libbsd-dev libx11-dev libxext-dev
+```
 
+### Build
+```bash
+make              # Build the executable
+make clean        # Remove object files
+make fclean       # Remove all build artifacts
+make re           # Clean rebuild
+```
 
+## Usage
 
-main.c::
+### Launching the Application
 
-1. connect to mlx: mlx_init()
-     to have access to the library functions and allocate a memory working through it.
-    
-    mlx_init():
-     - takes no parameter.
-     - mlx_set->mlx = mlx_init().
+**Mandelbrot Set:**
+```bash
+./fractol mandelbrot
+```
 
-since the mlx library functions takes one args but works on server inside inputs, I need to grouping the mlx sets.
-->> create a struct for mlx needs:
-typedef struct s_mlx;
-{
-    void    *mlx; // 1. connect to mlx: to build a connection through it.
-    void    *win; // 2. create a win: to create the win to draw on it.
-    t_type  type;
-}
+**Julia Set** (requires two complex parameters):
+```bash
+./fractol julia <real_part> <imaginary_part>
+```
 
+Examples:
+```bash
+./fractol julia -0.7 0.27015      # Classic Julia spiral
+./fractol julia -0.8 0.156        # Intricate filament pattern
+./fractol julia 0.285 0.01        # Seahorse valley
+```
 
-2. create a win: 
-    mlx_new_window(mlx_connection, width, height, title).
+**Burning Ship:**
+```bash
+./fractol burning_ship
+```
 
-->> need to assign macros WIDTH & HEIGHT. "I can just write numbers but I will use them a lot and this is much easier"
-1.  #define WIDTH = 800;
-    #define HEIGHT = 600;
-2. from s_mlxs truct:
-    void    *mlx;
-    void    *win;
-3. title: can be written "fractol", but I want to name it based on the type of fractol, therefore, I have written specific function.
-    mlx_set->win = mlx_new_window(mlx_set->mlx, WIDTH, HEIGHT, get_type_name(mlx_set->type));
-    get_type_name(mlx_set->type); ->> to return the entered fractol name type.
+### Interactive Controls
 
-4. Get Image Data Address
-You need to get a pointer to the raw pixel buffer of the image, so you can write pixel colors directly:
+| Control | Action |
+|---------|--------|
+| **Mouse Scroll Up** | Zoom in (1.1× magnification) |
+| **Mouse Scroll Down** | Zoom out |
+| **Arrow Keys** | Pan the view (translate by 0.1 units) |
+| **ESC / Window Close** | Exit application |
 
+## Technical Architecture
 
-Edit
-mlxset->img.addr = mlx_get_data_addr(mlxset->img.img,
-                                     &mlxset->img.bpp,
-                                     &mlxset->img.line_size,
-                                     &mlxset->img.endian);
-This gives you:
+### Core Components
 
-addr/ buffer → pointer to the actual pixel data.
+**Rendering Engine** (`render.c`, `render_utils.c`)
+- Main loop iterates through all pixels (800×600)
+- Per-fractal mathematical computation (Mandelbrot, Julia, Burning Ship)
+- Iteration-based color mapping with smooth gradients
+- Direct write to pixel buffer for maximum speed
 
-bpp (bits per pixel) → usually 32.
+**Event System** (`events.c`)
+- Mouse hooks for zoom operations centered at cursor position
+- Keyboard hooks for ESC key and arrow navigation
+- Window close event handling with proper resource cleanup
 
-line_size (bytes per line) → important for jumping to next row.
+**Memory Management**
+- Centralized allocation in `mem_alloc()`
+- Proper cleanup and deallocation in `clean_exit()`
+- No memory leaks in event-driven loop
 
-endian → tells you pixel format.
+**Coordinate Mapping**
+- Screen-to-complex-plane transformation using linear interpolation
+- Dynamic range mapping based on zoom and offset parameters
+- Per-pixel coordinate calculation for mathematical accuracy
 
-##  x and y in put_pixel
-x → the horizontal position of the pixel (0 is left, increasing to the right)
+### Data Structures
 
-y → the vertical position of the pixel (0 is top, increasing downward)
+```c
+typedef struct s_mlx {
+    t_type      type;          // MANDELBROT, JULIA, or BURNING_SHIP
+    void        *mlx;          // MiniLibX connection
+    void        *win;          // Window pointer
+    t_image     img;           // Pixel buffer and metadata
+    double      zoom;          // Current zoom level
+    double      offset_x;      // Horizontal translation
+    double      offset_y;      // Vertical translation
+    int         palette[16];   // Color lookup table
+    t_fractal   fractal;       // Complex number state
+} t_mlx;
+```
 
-So if your image size is WIDTH = 800 and HEIGHT = 800:
+### Mathematical Algorithms
 
-Valid x range is: 0 to 799
+**Mandelbrot Iteration:**
+z(n+1) = z(n)² + c where c is the pixel coordinate in the complex plane.
 
-Valid y range is: 0 to 799
+**Julia Iteration:**
+z(n+1) = z(n)² + c where c is a fixed complex parameter and z is the pixel coordinate.
 
+**Burning Ship Iteration:**
+z(n+1) = (|Re(z(n))| + i|Im(z(n)|)² + c
 
-     x ➡
-   ┌────────────────────────────────┐
- y │ (0,0)      ...           (799,0)
- ↓ │
-   │
-   │
-   │ (0,799)    ...         (799,799)
-   └────────────────────────────────┘
+Iteration continues until |z(n)| > 2 or maximum iterations reached. Iteration count determines final pixel color.
 
-### mapping 
-Absolutely! Let’s break down mapping from screen space to the complex plane — slowly, clearly, and visually. 
+## Build Configuration
 
- Imagine Your Window:
-Let's say your screen (window) size is:
+### Compiler Flags
+```
+-Wall -Wextra -Werror
+```
+Strict compilation with all warnings enabled and treated as errors ensures code quality.
 
-WIDTH = 800
-HEIGHT = 800
-This is your pixel space (aka screen space):
+### Constants
+- **WIDTH**: 800 pixels
+- **HEIGHT**: 600 pixels
+- **MAX_ITER**: 200 iterations
+- **ZOOM_FACTOR**: 1.1 (10% magnification per scroll)
+- **PALETTE_SIZE**: 16 colors
 
+## Project Structure
 
-(0,0)              → Top-left corner  
-(799,799)          → Bottom-right corner
-Now, let’s say you're rendering the Mandelbrot set, and the part of the complex plane you're viewing is:
+```
+fract-ol/
+├── main.c              # Application entry point, initialization
+├── fractol.h           # Header with structures, constants, declarations
+├── events.c            # Event handlers (keyboard, mouse, window)
+├── render.c            # Core fractal rendering loop
+├── render_utils.c      # Rendering helpers (color mapping, math)
+├── render_utils_1.c    # Additional rendering utilities
+├── mlx_utils.c         # MiniLibX wrapper functions
+├── utils.c             # General utilities (string parsing, validation)
+├── utils_1.c           # Additional utilities
+├── Makefile            # Build configuration
+└── minilibx-linux/     # MiniLibX graphics library (submodule)
+```
 
-Real range:   [-2.0 to +2.0]     ⬅ left to right
-Imaginary range: [+2.0 to -2.0] ⬅ top to bottom (yes, Y is upside down)
- Goal
-For every pixel (x, y) on your screen, figure out which complex number c = re + im*i it represents.
+## Performance Considerations
 
- The Formula (Linear Interpolation)
-This is how we "map" a number from one range to another:
+- **Iteration Limit**: 200 iterations balances visual detail with render speed
+- **Resolution**: 800×600 provides responsive 60+ FPS rendering on modern hardware
+- **Zoom Range**: Practical zoom limited by floating-point precision
+- **Real-time Responsiveness**: Event-driven architecture eliminates unnecessary recomputation
 
+## Development Notes
 
-double map(double val, double from_min, double from_max, double to_min, double to_max)
-{
-    return to_min + (val - from_min) * (to_max - to_min) / (from_max - from_min);
-}
- Example: Map pixel x = 400 (middle of screen) → Real number
-We’re mapping:
+### Building on WSL
+The application works perfectly under WSL2 with X11 server support. Ensure your WSL distribution has X11 forwarding configured.
 
-val = 400
+### Input Validation
+- Julia set parameters validated as floating-point numbers
+- Fractal type checked against supported options
+- Proper error messages for invalid inputs
 
-From range [0 to 800] (pixel width)
+### Color Palette
+The 16-color palette is dynamically initialized and smoothly interpolates between colors based on iteration count, creating visually appealing gradients.
 
-To range [-2.0 to +2.0] (complex plane)
+## Author
 
+**modat** (modat@student.42.fr)
 
-map(400, 0, 800, -2.0, +2.0) = 0.0
-That makes sense! 400 is halfway, and 0.0 is halfway between -2.0 and +2.0.
+Created as part of the 42 School curriculum.
 
- Visual Summary
-mathematica
-Copy code
-Screen X (Pixels):     0          400           800
-                      |------------|------------|
-Complex Re:         -2.0         0.0          +2.0
-Same for y → imaginary (with flipped y-axis, optional):
+## License
 
-mathematica
-Copy code
-Screen Y (Pixels):     0          400           800
-                      |------------|------------|
-Complex Im:         +2.0         0.0          -2.0
-So pixel (400, 400) = complex number 0.0 + 0.0i
+Educational use. See LICENSE file for details.
 
- Use in Mandelbrot Code
-In your fractal rendering loop:
+## Troubleshooting
 
+### Build Errors
 
-for (int y = 0; y < HEIGHT; y++)
-{
-    for (int x = 0; x < WIDTH; x++)
-    {
-        double re = map(x, 0, WIDTH, -2.0 / zoom + offset_x, +2.0 / zoom + offset_x);
-        double im = map(y, 0, HEIGHT, +2.0 / zoom + offset_y, -2.0 / zoom + offset_y);
+**"cannot find -lbsd"**
+```bash
+sudo apt-get install -y libbsd-dev
+```
 
-        // Use (re, im) as your complex number 'c' for Mandelbrot
-    }
-}
-zoom controls how close you’re zoomed in
+**Missing X11 libraries**
+```bash
+sudo apt-get install -y libx11-dev libxext-dev
+```
 
-offset_x/y move the center
+### Runtime Issues
 
-map() figures out the correct re and im values
+**Window doesn't render**
+- Verify X11 server is running
+- On WSL: Ensure X11 forwarding is configured
+- Check that MiniLibX compiled successfully
 
- TL;DR
+**Fractals appear incorrect or missing**
+- Verify correct fractal type name (mandelbrot, julia, burning_ship)
+- For Julia: check that parameters are valid floating-point numbers
+- Ensure zoom level is within floating-point precision limits
 
-Mapping screen to complex plane is just:
+## References
 
-"Take a screen coordinate and stretch it to match the current view of the complex plane."
-
-Without this, you’d just be drawing on pixels, but Mandelbrot happens in the land of complex numbers 
+- [Mandelbrot Set](https://en.wikipedia.org/wiki/Mandelbrot_set)
+- [Julia Set](https://en.wikipedia.org/wiki/Julia_set)
+- [Burning Ship Fractal](https://en.wikipedia.org/wiki/Burning_Ship_fractal)
+- [MiniLibX Documentation](https://github.com/42Paris/minilibx-linux)
