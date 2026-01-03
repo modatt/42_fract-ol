@@ -1,0 +1,20 @@
+# Old README file - keep locally for reference
+README.md.old
+
+# Build artifacts
+*.o
+*.a
+fractol
+
+# Object files
+obj/
+
+# Editor and IDE
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Compiled binaries
+*.out
