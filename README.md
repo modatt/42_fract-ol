@@ -15,9 +15,9 @@ The application provides an intuitive interface for exploring these fractals wit
 
 Add your screenshots to `imgs/` using these filenames and the previews below will render automatically:
 
-- Mandelbrot: ![Mandelbrot preview](imgs/mandelbrot.png)
+- Mandelbrot: ![Mandelbrot preview](imgs/mandlebrot.png)
 - Julia: ![Julia preview](imgs/julia.png)
-- Burning Ship: ![Burning Ship preview](imgs/burning_ship.png)
+- Burning Ship: ![Burning Ship preview](imgs/Burningship.png)
 
 ## Features
 
