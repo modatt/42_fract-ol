@@ -11,6 +11,14 @@ fract-ol is a graphical exploration tool for three of the most famous fractals i
 
 The application provides an intuitive interface for exploring these fractals with full interactive control over zoom levels, pan coordinates, and rendering parameters.
 
+## Gallery
+
+Add your screenshots to `imgs/` using these filenames and the previews below will render automatically:
+
+- Mandelbrot: ![Mandelbrot preview](imgs/mandelbrot.png)
+- Julia: ![Julia preview](imgs/julia.png)
+- Burning Ship: ![Burning Ship preview](imgs/burning_ship.png)
+
 ## Features
 
 ### Core Functionality
